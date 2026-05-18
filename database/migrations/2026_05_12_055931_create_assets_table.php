@@ -14,9 +14,9 @@ return new class extends Migration
     Schema::create('assets', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->string('category'); // Untuk syarat Filter
+        $table->string('category'); 
         $table->string('status')->default('available');
-        $table->string('condition'); // misal: good, broken
+        $table->string('condition'); 
         $table->timestamps();
     });
 }
