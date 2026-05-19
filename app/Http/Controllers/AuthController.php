@@ -23,12 +23,9 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $token = $user->createToken('ventra_token')->plainTextToken;
-
         return response()->json([
-            'message' => 'Registrasi Berhasil',
-            'access_token' => $token,
-            'token_type' => 'Bearer'
+            'success' => true,
+            'message' => 'Registrasi Berhasil. Silakan login untuk mendapatkan token akses.'
         ], 201);
     }
 
