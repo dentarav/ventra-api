@@ -52,4 +52,26 @@ class AuthController extends Controller
             'token_type' => 'Bearer'
         ]);
     }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user(); 
+
+        $request->validate([
+            'name' => 'string|max:255',
+            'email' => 'string|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6'
+        ]);
+
+        $user->name = $request->name ?? $user->name;
+        $user->email = $request->email ?? $user->email;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'Profil berhasil diperbarui', 'user' => $user], 200);
+    }
 }

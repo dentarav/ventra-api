@@ -10,24 +10,22 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void {
-    Schema::create('assets', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
         $table->id();
         $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
-        $table->foreignId('category_id')->constrained()->onDelete('cascade'); 
-        $table->foreignId('location_id')->constrained()->onDelete('cascade'); 
-        $table->string('name');
-        $table->string('status')->default('available');
-        $table->string('condition');
-        $table->string('image')->nullable();
+        $table->foreignId('asset_id')->constrained()->onDelete('cascade'); 
+        $table->string('status')->default('borrowed'); 
+        $table->timestamp('borrowed_at')->useCurrent();
+        $table->timestamp('returned_at')->nullable();
         $table->timestamps();
-    });
-}
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('transactions');
     }
 };
