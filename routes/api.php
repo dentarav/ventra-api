@@ -14,14 +14,15 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         
+        Route::middleware('admin')->group(function () {
+            Route::get('assets/report', [AssetController::class, 'report']);
+            Route::apiResource('categories', CategoryController::class);
+            Route::apiResource('locations', LocationController::class);
+        });
+
         Route::apiResource('assets', AssetController::class);
         Route::post('transactions/borrow', [TransactionController::class, 'borrow']);
         Route::put('profile', [AuthController::class, 'updateProfile']);
-
-        Route::middleware('admin')->group(function () {
-            Route::apiResource('categories', CategoryController::class);
-            Route::apiResource('locations', LocationController::class);
-            Route::get('assets/report', [AssetController::class, 'report']);
-        });
+        
     });
 });

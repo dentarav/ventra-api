@@ -7,43 +7,29 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $locations = Location::all();
+        return response()->json([
+            'status' => 'success',
+            'data' => $locations
+        ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Location $location)
-    {
-        //
-    }
+        $location = Location::create([
+            'name' => $request->name
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Location $location)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Location $location)
-    {
-        //
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Lokasi berhasil ditambahkan',
+            'data' => $location
+        ], 201);
     }
 }

@@ -14,7 +14,7 @@ class TransactionController extends Controller
     
     $asset = Asset::find($request->asset_id);
     
-    if ($asset->status !== 'available') {
+    if (strtolower($asset->status) !== 'available') {
         return response()->json(['message' => 'Barang sedang dipakai/tidak tersedia!'], 400);
     }
 
